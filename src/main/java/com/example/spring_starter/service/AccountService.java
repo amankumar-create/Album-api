@@ -21,19 +21,31 @@ import com.example.spring_starter.repository.AccountRepository;
 public class AccountService implements UserDetailsService {
     @Autowired
     AccountRepository accountRepo;
-    
+
     @Autowired
     PasswordEncoder passwordEncoder;
 
-    public Account save(Account account){
+    public Account save(Account account) {
         account.setPassword(passwordEncoder.encode(account.getPassword()));
         return accountRepo.save(account);
+    }
+
+    public List<Account> findAll() {
+        return accountRepo.findAll();
+    }
+
+    public Optional<Account> findByEmail(String email) {
+        return accountRepo.findByEmail(email);
+    }
+
+    public Optional<Account> findById(Long id) {
+        return accountRepo.findById(id);
     }
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         Optional<Account> optionalAccount = accountRepo.findByEmail(email);
-        if(!optionalAccount.isPresent() ){
+        if (!optionalAccount.isPresent()) {
             throw new UsernameNotFoundException("Account not found");
         }
         Account account = optionalAccount.get();
