@@ -6,7 +6,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.xml.bind.annotation.XmlRootElement;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -15,19 +14,20 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-@XmlRootElement
-public class Album {
+public class Photo {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private Long id;
+    private long id;
 
     private String name;
-
+    
     private String description;
+    
+    private String fileName;
+    
+    private String originalFileName;
 
- 
     @ManyToOne
-    @JoinColumn(name = "account_id", referencedColumnName = "id", nullable = false)
-    private Account account;
-
+    @JoinColumn(name = "album_id", referencedColumnName = "id", nullable = false)
+    private Album album;
 }
